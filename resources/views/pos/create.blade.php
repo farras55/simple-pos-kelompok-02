@@ -28,6 +28,9 @@
              @click="addToCart({{ $product->id }}, '{{ $product->name }}', {{ $product->price }})">
             <p class="font-medium">{{ $product->name }}</p>
             <p class="text-sm text-slate-500">Rp {{ number_format($product->price) }}</p>
+            @if ($product->stock < 10)
+                <span class="bg-amber-100 text-amber-700 text-xs px-2 py-1 rounded">Stok Menipis</span>
+            @endif
         </div>
         @endforeach
     </div>
