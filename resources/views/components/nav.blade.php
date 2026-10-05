@@ -11,5 +11,10 @@
             class="hover:text-blue-300 {{ request()->routeIs('transactions.index') ? 'text-blue-400 font-bold' : '' }}">
             Transaksi
         </a>
+
+        <a href="{{ route('products.index') }}" 
+            class="hover:text-blue-300 {{ request()->routeIs('products.index') ? 'text-blue-400 font-bold' : '' }}">
+            Produk
+        </a>
     </nav>
 </div>
