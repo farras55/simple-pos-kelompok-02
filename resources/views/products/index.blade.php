@@ -8,6 +8,19 @@
             Daftar Produk
         </h1>
 
+        @if (session('success'))
+            <div class="bg-green-50 text-green-700 p-3 rounded-md mb-4">
+                {{ session('success') }}
+            </div>
+        @endif
+
+        <a
+            href="{{ route('products.create') }}"
+            class="inline-block mb-4 bg-blue-600 text-white px-4 py-2 rounded-md"
+        >
+            Tambah Produk
+        </a>
+
         <div class="overflow-x-auto">
             <table class="w-full text-left border-collapse">
                 <thead>
