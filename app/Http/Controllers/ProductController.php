@@ -53,4 +53,4 @@ class ProductController extends Controller
             ->route('products.index')
             ->with('success', 'Produk berhasil diperbarui.');
     }
-}
+} 
