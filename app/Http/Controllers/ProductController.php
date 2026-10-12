@@ -1,5 +1,7 @@
 <?php
+
 namespace App\Http\Controllers;
+
 use App\Http\Requests\StoreProductRequest;
 use App\Models\Category;
 use App\Models\Product;
@@ -8,7 +10,9 @@ class ProductController extends Controller
 {
     public function index()
     {
-        $products = Product::with('category')->orderBy('name')->paginate(10);
+        $products = Product::with('category')
+            ->orderBy('name')
+            ->paginate(10);
 
         return view('products.index', compact('products'));
     }
@@ -24,22 +28,29 @@ class ProductController extends Controller
     {
         Product::create($request->validated());
 
-        return redirect()->route('products.index')
+        return redirect()
+            ->route('products.index')
             ->with('success', 'Produk berhasil ditambahkan.');
     }
 
-    public function edit(Product $product)
+    public function edit(string $product)
     {
+        $product = Product::findOrFail($product);
         $categories = Category::orderBy('name')->get();
 
         return view('products.edit', compact('product', 'categories'));
     }
 
-    public function update(StoreProductRequest $request, Product $product)
-    {
+    public function update(
+        StoreProductRequest $request,
+        string $product
+    ) {
+        $product = Product::findOrFail($product);
+
         $product->update($request->validated());
 
-        return redirect()->route('products.index')
+        return redirect()
+            ->route('products.index')
             ->with('success', 'Produk berhasil diperbarui.');
     }
 } 
