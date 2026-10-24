@@ -85,8 +85,8 @@
             
             <p class="font-semibold mt-2">Subtotal: Rp <span x-text="subtotal()"></span></p>
 
-            <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded font-medium hover:bg-blue-700 w-full" x-show="cart.length > 0">
-                Simpan Transaksi
+            <button type="submit" class="mt-4 bg-blue-600 text-white px-4 py-2 rounded font-medium hover:bg-blue-700 w-full">
+                Bayar
             </button>
         </div>
     </form>
