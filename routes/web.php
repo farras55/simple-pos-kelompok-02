@@ -13,7 +13,7 @@ Route::middleware('guest')->group(function () {
     Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 });
 
-// Route yang bisa diakses SEMUA user yang sudah login (Admin & Kasir)
+// Route yang bisa diakses SEMUA user yang sudah login (Admin, Manager, & Kasir)
 Route::middleware('auth')->group(function () {
     // Dashboard
     Route::get('/dashboard', DashboardController::class)->name('dashboard');
@@ -22,12 +22,15 @@ Route::middleware('auth')->group(function () {
     Route::get('/pos', [TransactionController::class, 'create'])->name('pos.create');
     Route::post('/pos', [TransactionController::class, 'store'])->name('transactions.store');
 
+    // Logout
+    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
+});
+
+// Route khusus ADMIN dan MANAGER
+Route::middleware(['auth', 'role:admin,manager'])->group(function () {
     // Riwayat transaksi
     Route::get('/transactions', [TransactionController::class, 'index'])->name('transactions.index');
     Route::get('/transactions/{transaction}', [TransactionController::class, 'show'])->name('transactions.show');
-
-    // Logout
-    Route::post('/logout', [LoginController::class, 'destroy'])->name('logout');
 });
 
 // Route yang HANYA bisa diakses oleh ADMIN

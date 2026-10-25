@@ -8,10 +8,10 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureUserHasRole
 {
-    public function handle(Request $request, Closure $next, string $role): Response
+    public function handle(Request $request, Closure $next, string ...$roles): Response
     {
-        // Jika user belum login, atau role-nya tidak cocok dengan parameter, tolak akses
-        if (! $request->user() || $request->user()->role !== $role) {
+        // Mengecek apakah role user saat ini ada di dalam array $roles yang diizinkan
+        if (! $request->user() || ! in_array($request->user()->role, $roles)) {
             abort(403, 'Anda tidak memiliki akses ke halaman ini.');
         }
 
