@@ -12,7 +12,9 @@ class EnsureUserHasRole
     {
         // Mengecek apakah role user saat ini ada di dalam array $roles yang diizinkan
         if (! $request->user() || ! in_array($request->user()->role, $roles)) {
-            abort(403, 'Anda tidak memiliki akses ke halaman ini.');
+            $requiredRoles = implode(', ', $roles);
+
+            abort(403, "Halaman ini hanya untuk peran {$requiredRoles}.");
         }
 
         return $next($request);
