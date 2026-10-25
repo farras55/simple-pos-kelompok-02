@@ -9,6 +9,10 @@ use Illuminate\Support\Facades\Route;
 
 // Route untuk Guest (Belum Login)
 Route::middleware('guest')->group(function () {
+    Route::view('/', 'info')->name('home');
+    Route::view('/info', 'info')->name('info');
+    Route::view('/informasi', 'info')->name('informasi');
+
     Route::get('/login', [LoginController::class, 'create'])->name('login');
     Route::post('/login', [LoginController::class, 'store'])->name('login.store');
 });
