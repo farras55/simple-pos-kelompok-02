@@ -152,6 +152,53 @@ curl -s -b cookies.txt -H "Accept: application/json" \
 
 ---
 
+## 3. Skenario Uji Manual
+
+Persiapan: jalankan `php artisan migrate:fresh --seed`, lalu `php artisan serve` dan `npm run dev` di terminal terpisah. Buka `http://127.0.0.1:8000`. Semua akun demo memakai kata sandi `password`.
+
+| Peran | Email |
+|---|---|
+| Admin | admin@pos.test |
+| Kasir | kasir@pos.test |
+| Manager | manager@pos.test |
+
+### Skenario 1: Admin
+
+| No | Langkah | Hasil yang diharapkan |
+|---|---|---|
+| 1 | Login dengan admin@pos.test | Diarahkan ke `/pos` |
+| 2 | Lihat navigasi | Menu Kasir, Transaksi, Produk, Kategori tampil; kanan atas menampilkan nama dan peran |
+| 3 | Buka `/products` | Daftar produk tampil normal |
+| 4 | Buka `/categories` | Daftar kategori tampil normal |
+| 5 | Klik Keluar | Kembali ke halaman `/login` |
+
+### Skenario 2: Kasir
+
+| No | Langkah | Hasil yang diharapkan |
+|---|---|---|
+| 1 | Login dengan kasir@pos.test | Diarahkan ke `/pos` |
+| 2 | Buka `/pos` | Halaman kasir tampil normal |
+| 3 | Ketik `/products` di address bar | Halaman 403 "Anda tidak memiliki akses ke halaman ini." |
+| 4 | Ketik `/transactions` di address bar | Halaman 403 (riwayat transaksi hanya untuk admin dan manager) |
+| 5 | Login dengan kata sandi salah | Tetap di `/login`, muncul "Email atau kata sandi salah." |
+| 6 | Tanpa login, buka `/products` | Diarahkan ke `/login` |
+
+### Skenario 3: Manager
+
+| No | Langkah | Hasil yang diharapkan |
+|---|---|---|
+| 1 | Login dengan manager@pos.test | Diarahkan ke `/pos` |
+| 2 | Lihat navigasi | Menu Kasir dan Transaksi tampil; kanan atas "Manager Kafe (manager)" |
+| 3 | Buka `/transactions` | Riwayat transaksi tampil normal |
+| 4 | Ketik `/products` di address bar | Halaman 403 "Anda tidak memiliki akses ke halaman ini." |
+
+### Catatan Temuan
+
+- Menu Transaksi tampil untuk kasir, padahal `/transactions` menghasilkan 403.
+- Membuka `/login` saat sudah login mengarah ke `/dashboard` dan menghasilkan error 500. Klik Keluar dulu sebelum membuka `/login`.
+
+---
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
