@@ -12,7 +12,7 @@
             Masuk ke Simple POS
         </h1>
 
-        <form method="POST" action="{{ route('login.store') }}" class="space-y-4">
+        <form method="POST" action="/login" class="space-y-4">
             @csrf
 
             <div>
@@ -66,11 +66,6 @@
             kata sandi <code>password</code>.
         </p>
 
-        <div class="mt-4 pt-4 border-t border-slate-100 text-center">
-            <a href="{{ route('info') }}" class="text-xs text-blue-600 hover:underline">
-                &larr; Kembali ke Halaman Informasi
-            </a>
-        </div>
     </div>
 </body>
 </html>

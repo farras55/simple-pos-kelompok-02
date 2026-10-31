@@ -3,64 +3,28 @@
 @section('title', 'Laporan Penjualan')
 
 @section('content')
-    <div class="container mx-auto px-4 py-6">
-        <h1 class="text-2xl font-semibold mb-6">
-            Laporan Penjualan
-        </h1>
-
-        <form method="GET"
-              action="{{ route('reports.index') }}"
-              class="flex flex-wrap gap-4 items-end mb-6">
-
-            <div>
-                <label for="from" class="block text-sm font-medium mb-1">
-                    Dari Tanggal
-                </label>
-
-                <input
-                    type="date"
-                    id="from"
-                    name="from"
-                    value="{{ $from }}"
-                    class="border rounded-md px-3 py-2">
-            </div>
-
-            <div>
-                <label for="to" class="block text-sm font-medium mb-1">
-                    Sampai Tanggal
-                </label>
-
-                <input
-                    type="date"
-                    id="to"
-                    name="to"
-                    value="{{ $to }}"
-                    class="border rounded-md px-3 py-2">
-            </div>
-
-            <button type="submit"
-                    class="bg-slate-900 text-white px-4 py-2 rounded-md">
-                Filter
-            </button>
-
-            <a href="{{ route('reports.export.csv', ['from' => $from, 'to' => $to]) }}"
-               class="bg-blue-600 text-white px-4 py-2 rounded-md">
-                Export CSV
-            </a>
-        </form>
-
-        <div class="bg-white border rounded-md p-6 max-w-md">
-            <p class="text-sm text-gray-500">
-                Total Penjualan
-            </p>
-
-            <p class="text-2xl font-bold mt-2">
-                Rp {{ number_format($totalPenjualan, 0, ',', '.') }}
-            </p>
-
-            <p class="text-sm text-gray-500 mt-3">
-                Jumlah Transaksi: {{ $jumlahTransaksi }}
-            </p>
-        </div>
+    <h1 class="text-lg font-semibold mb-4">Laporan Penjualan</h1>
+    
+    <form method="GET" action="{{ route('reports.index') }}" class="flex gap-3 items-end mb-6">
+        <label class="block">
+            <span class="text-sm font-medium">Dari</span>
+            <input type="date" name="from" value="{{ $from }}" class="mt-1 block border rounded-md px-3 py-2 text-sm">
+        </label>
+        
+        <label class="block">
+            <span class="text-sm font-medium">Sampai</span>
+            <input type="date" name="to" value="{{ $to }}" class="mt-1 block border rounded-md px-3 py-2 text-sm">
+        </label>
+        
+        <button type="submit" class="bg-slate-900 text-white px-4 py-2 rounded-md text-sm">Filter</button>
+        
+        <a href="{{ route('reports.export.csv', ['from' => $from, 'to' => $to]) }}" class="bg-blue-600 text-white px-4 py-2 rounded-md text-sm">Export CSV</a>
+        <a href="{{ route('reports.export.xlsx', ['from' => $from, 'to' => $to]) }}" class="bg-green-600 text-white px-4 py-2 rounded-md text-sm">Export Excel</a>
+    </form>
+    
+    <div class="bg-white border rounded-md p-4 max-w-sm">
+        <p class="text-sm text-slate-500">Total Penjualan</p>
+        <p class="text-2xl font-semibold">Rp {{ number_format($totalPenjualan) }}</p>
+        <p class="text-sm text-slate-500 mt-2">{{ $jumlahTransaksi }} transaksi</p>
     </div>
 @endsection
