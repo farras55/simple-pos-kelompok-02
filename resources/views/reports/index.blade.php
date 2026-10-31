@@ -42,6 +42,11 @@
                     class="bg-slate-900 text-white px-4 py-2 rounded-md">
                 Filter
             </button>
+
+            <a href="{{ route('reports.export.csv', ['from' => $from, 'to' => $to]) }}"
+               class="bg-blue-600 text-white px-4 py-2 rounded-md">
+                Export CSV
+            </a>
         </form>
 
         <div class="bg-white border rounded-md p-6 max-w-md">
