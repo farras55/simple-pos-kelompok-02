@@ -16,8 +16,8 @@
     <h1>Laporan Penjualan</h1>
     <p>Periode {{ $from }} s.d. {{ $to }}</p>
     <p>Total penjualan: <strong>Rp {{ number_format($totalPenjualan) }}</strong> dari {{ $jumlahTransaksi }} transaksi</p>
-    <p>50 transaksi terbaru pada periode ini:</p>
     
+    <p>50 transaksi terbaru pada periode ini:</p>
     <table>
         <thead>
             <tr>
@@ -36,6 +36,30 @@
                     <td class="right">Rp {{ number_format($t->total) }}</td>
                 </tr>
             @endforeach
+        </tbody>
+    </table>
+
+    <h2 style="font-size: 14px; margin-top: 24px;">5 Produk Terlaris</h2>
+    <table>
+        <thead>
+            <tr>
+                <th style="width: 50px;">No</th>
+                <th>Nama Produk</th>
+                <th class="right">Jumlah Terjual</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($bestSellingProducts as $index => $product)
+                <tr>
+                    <td>{{ $index + 1 }}</td>
+                    <td>{{ $product->name }}</td>
+                    <td class="right">{{ $product->total_qty }} pcs</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="3" style="text-align: center;">Belum ada data produk terjual pada periode ini.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
 </body>
