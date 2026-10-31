@@ -22,6 +22,11 @@
                 class="hover:text-blue-300 {{ request()->routeIs('categories.*') ? 'text-blue-400 font-bold' : '' }}">
                 Kategori
             </a>
+
+            <a href="{{ route('reports.index') }}"
+                class="hover:text-blue-300 {{ request()->routeIs('reports.*') ? 'text-blue-400 font-bold' : '' }}">
+                Laporan
+            </a>
         @endif
 
         <div class="ml-auto flex items-center gap-4">
