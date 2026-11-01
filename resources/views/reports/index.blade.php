@@ -15,6 +15,19 @@
             <span class="text-sm font-medium">Sampai</span>
             <input type="date" name="to" value="{{ $to }}" class="mt-1 block border rounded-md px-3 py-2 text-sm">
         </label>
+
+        <label class="block">
+            <span class="text-sm font-medium">Kategori</span>
+            <select name="category_id" class="mt-1 block border rounded-md px-3 py-2 text-sm">
+                <option value="">Semua Kategori</option>
+
+                @foreach ($categories as $category)
+                    <option value="{{ $category->id }}" @selected($categoryId == $category->id)>
+                        {{ $category->name }}
+                    </option>
+                @endforeach
+            </select>
+        </label>
         
         <button type="submit" class="bg-slate-900 text-white px-4 py-2 rounded-md text-sm">Filter</button>
         

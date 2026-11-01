@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Exports\SalesReportExport;
 use App\Jobs\ProcessProductImport;
+use App\Models\Category;
 use App\Models\ImportError;
 use App\Models\Transaction;
 use Barryvdh\DomPDF\Facade\Pdf;
@@ -23,13 +24,18 @@ class ReportController extends Controller
     public function index(Request $request): View
     {
         [$from, $to] = $this->resolveDateRange($request);
-        $query = $this->filteredQuery($from, $to);
+
+        $categoryId = $request->integer('category_id') ?: null;
+
+        $query = $this->filteredQuery($from, $to, $categoryId);
 
         return view('reports.index', [
             'totalPenjualan' => $query->sum('total'),
             'jumlahTransaksi' => $query->count(),
             'from' => $from->toDateString(),
             'to' => $to->toDateString(),
+            'categories' => Category::orderBy('name')->get(),
+            'categoryId' => $categoryId,
         ]);
     }
 
@@ -158,11 +164,19 @@ class ReportController extends Controller
     }
 
     /**
-     * Mengambil transaksi berdasarkan rentang tanggal.
+     * Mengambil transaksi berdasarkan rentang tanggal dan kategori.
      */
-    private function filteredQuery($from, $to): Builder
+    private function filteredQuery($from, $to, ?int $categoryId = null): Builder
     {
-        return Transaction::with('user')
+        $query = Transaction::with('user')
             ->whereBetween('created_at', [$from, $to]);
+
+        if ($categoryId) {
+            $query->whereHas('details.product', function ($query) use ($categoryId) {
+                $query->where('category_id', $categoryId);
+            });
+        }
+
+        return $query;
     }
 }
