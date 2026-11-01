@@ -27,6 +27,12 @@
                 class="hover:text-blue-300 {{ request()->routeIs('reports.*') ? 'text-blue-400 font-bold' : '' }}">
                 Laporan
             </a>
+
+            <!-- Menu baru untuk Langkah 7 -->
+            <a href="{{ route('import.create') }}"
+                class="hover:text-blue-300 {{ request()->routeIs('import.*') ? 'text-blue-400 font-bold' : '' }}">
+                Import
+            </a>
         @endif
 
         <div class="ml-auto flex items-center gap-4">
@@ -37,7 +43,6 @@
 
             <form method="POST" action="{{ route('logout') }}">
                 @csrf
-
                 <button type="submit" class="hover:text-red-300">
                     Keluar
                 </button>
