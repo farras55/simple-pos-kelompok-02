@@ -16,14 +16,20 @@ class ProcessProductImport implements ShouldQueue
     public array $backoff = [10, 60];
     public int $timeout = 60;
 
-    public function __construct(private string $csvPath) {}
+    public function __construct(
+        private string $csvPath,
+        private string $batchId,
+        private string $fileName
+    ) {}
 
     public function handle(): void
     {
-        // Semua logika pembacaan file yang panjang diganti dengan HANYA SATU BARIS ini!
-        Excel::import(new ProductsImport, $this->csvPath);
+        Excel::import(
+            new ProductsImport($this->batchId, $this->fileName),
+            $this->csvPath
+        );
 
-        // Hapus file setelah selesai diimpor
+        // Hapus file hanya jika proses import berhasil.
         Storage::delete($this->csvPath);
     }
 }
