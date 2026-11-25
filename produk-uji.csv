@@ -1,0 +1,5 @@
+name,category_id,price
+Produk Uji Import,1,15000
+Produk Kategori Salah,999,20000
+,2,10000
+Produk Harga Salah,1,abc
